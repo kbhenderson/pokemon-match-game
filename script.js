@@ -4,23 +4,20 @@ let hasFlippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
 
-function flipCard(){
-  if(lockBoard) return;
-  if(this === firstCard) return;
+function flipCard() {
+  if (lockBoard) return;
+  if (this === firstCard) return;
 
   this.classList.add('flip');
-  //first click
 
-  if(!hasFlippedCard){
-  hasFlippedCard = true;
-  firstCard = this;
+  if (!hasFlippedCard) {
+    hasFlippedCard = true;
+    firstCard = this;
 
-  return;
-}
+    return;
+  }
 
   secondCard = this;
-
-  //do they match?
   checkForMatch();
 }
 
@@ -32,27 +29,25 @@ function checkForMatch() {
 
 function disableCards() {
   firstCard.removeEventListener('click', flipCard);
-
   secondCard.removeEventListener('click', flipCard);
 
   resetBoard();
 }
 
-function unflipCards(){
+function unflipCards() {
   lockBoard = true;
 
   setTimeout(() => {
     firstCard.classList.remove('flip');
     secondCard.classList.remove('flip');
 
-  resetBoard();
+    resetBoard();
   }, 1500);
 }
 
-function resetBoard(){
-  [hasFlippedCard, lockBoard]=[false, false];
+function resetBoard() {
+  [hasFlippedCard, lockBoard] = [false, false];
   [firstCard, secondCard] = [null, null];
-
 }
 
 (function shuffle() {
@@ -60,6 +55,6 @@ function resetBoard(){
     let randomPos = Math.floor(Math.random() * 12);
     card.style.order = randomPos;
   });
-})(); //immediately invoked because of peranthesis two of them around and second.
+})();
 
-cards.forEach(card=> card.addEventListener('click', flipCard));
+cards.forEach(card => card.addEventListener('click', flipCard));
